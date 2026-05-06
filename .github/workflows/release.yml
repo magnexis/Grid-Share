@@ -78,7 +78,7 @@ jobs:
           (cd "$OUT" && zip -r "../gridshare-api-$VERSION-linux-x64.zip" .)
 
       - name: Upload workflow artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: gridshare-release-${{ steps.version.outputs.version }}
           path: artifacts/release/**/*.zip
