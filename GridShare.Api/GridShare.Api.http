@@ -1,0 +1,6 @@
+@GridShare.Api_HostAddress = http://localhost:5294
+
+GET {{GridShare.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

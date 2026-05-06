@@ -1,0 +1,58 @@
+# Build output
+bin/
+obj/
+out/
+publish/
+TestResults/
+coverage/
+coverage.*
+*.trx
+*.coverage
+*.coveragexml
+
+# Release and generated artifacts
+release/
+artifacts/
+*.nupkg
+*.snupkg
+*.zip
+*.tar.gz
+
+# Runtime telemetry and local logs
+telemetry/
+logs/
+*.log
+*.err.log
+*.out.log
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# IDE and editor state
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Docker/local infrastructure state
+docker-data/
+mongo-data/
+*.pid
+
+# Tooling caches
+.dotnet/
+.nuget/
+.cache/

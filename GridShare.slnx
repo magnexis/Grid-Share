@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="GridShare.Api/GridShare.Api.csproj" />
+  <Project Path="GridShare.Application/GridShare.Application.csproj" />
+  <Project Path="GridShare.Cli/GridShare.Cli.csproj" />
+  <Project Path="GridShare.Domain/GridShare.Domain.csproj" />
+  <Project Path="GridShare.Infrastructure/GridShare.Infrastructure.csproj" />
+  <Project Path="GridShare.Simulation/GridShare.Simulation.csproj" />
+  <Project Path="GridShare.Tests/GridShare.Tests.csproj" />
+</Solution>

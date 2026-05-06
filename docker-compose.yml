@@ -1,0 +1,12 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: gridshare-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - gridshare_mongo:/data/db
+
+volumes:
+  gridshare_mongo:

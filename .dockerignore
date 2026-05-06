@@ -1,0 +1,8 @@
+**/bin/
+**/obj/
+artifacts/
+telemetry/
+*.log
+.git/
+.github/
+docs/assets/dashboard-after.png

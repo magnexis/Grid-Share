@@ -1,0 +1,91 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version, for example 0.1.0"
+        required: true
+        default: "0.1.0"
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    name: Package CLI and API
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Resolve version
+        id: version
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION="${GITHUB_REF_NAME#v}"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Restore
+        run: dotnet restore GridShare.slnx
+
+      - name: Test
+        run: dotnet test GridShare.slnx --configuration Release --no-restore
+
+      - name: Publish CLI packages
+        shell: bash
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          mkdir -p artifacts/release/cli
+          for RID in win-x64 linux-x64 osx-x64; do
+            OUT="artifacts/release/cli/gridshare-cli-$VERSION-$RID"
+            dotnet publish GridShare.Cli/GridShare.Cli.csproj \
+              --configuration Release \
+              --runtime "$RID" \
+              --self-contained false \
+              -p:Version="$VERSION" \
+              -p:PublishSingleFile=true \
+              -p:IncludeNativeLibrariesForSelfExtract=true \
+              --output "$OUT"
+            (cd "$OUT" && zip -r "../gridshare-cli-$VERSION-$RID.zip" .)
+          done
+
+      - name: Publish API package
+        shell: bash
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          mkdir -p artifacts/release/api
+          OUT="artifacts/release/api/gridshare-api-$VERSION-linux-x64"
+          dotnet publish GridShare.Api/GridShare.Api.csproj \
+            --configuration Release \
+            --runtime linux-x64 \
+            --self-contained false \
+            -p:Version="$VERSION" \
+            --output "$OUT"
+          (cd "$OUT" && zip -r "../gridshare-api-$VERSION-linux-x64.zip" .)
+
+      - name: Upload workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gridshare-release-${{ steps.version.outputs.version }}
+          path: artifacts/release/**/*.zip
+
+      - name: Create GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/release/**/*.zip
+          body_path: release/notes-template.md

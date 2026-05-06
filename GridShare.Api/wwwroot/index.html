@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GridShare Operations</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="map-stage" aria-label="Live micro-grid map">
+        <canvas id="grid-canvas"></canvas>
+      </section>
+
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">GridShare</p>
+          <h1>Micro-Grid Market Operations</h1>
+        </div>
+        <div class="top-actions">
+          <label class="currency-picker">
+            <span>Currency</span>
+            <select id="currency-select" aria-label="Display currency">
+              <option value="USD">USD</option>
+            </select>
+          </label>
+          <div class="connection" id="connection-state">Connecting</div>
+        </div>
+      </header>
+
+      <aside class="hud hud-left">
+        <section class="panel">
+          <div class="panel-heading">
+            <span>Grid Health</span>
+            <strong id="grid-status">Waiting</strong>
+          </div>
+          <div class="metric-grid">
+            <div>
+              <label>Produced</label>
+              <output id="produced">0.00 kW</output>
+            </div>
+            <div>
+              <label>Consumed</label>
+              <output id="consumed">0.00 kW</output>
+            </div>
+            <div>
+              <label>Supply</label>
+              <output id="supply">0.00 kW</output>
+            </div>
+            <div>
+              <label>Demand</label>
+              <output id="demand">0.00 kW</output>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <span>Market Price</span>
+            <strong id="price">$0.000</strong>
+          </div>
+          <div class="price-band" aria-hidden="true">
+            <div id="price-fill"></div>
+          </div>
+          <div class="split-row">
+            <span>Display currency</span>
+            <strong id="currency-label">USD</strong>
+          </div>
+          <div class="split-row">
+            <span>Open orders</span>
+            <strong id="orders">0</strong>
+          </div>
+          <div class="split-row">
+            <span>Carbon offset</span>
+            <strong id="carbon">0.00 kg</strong>
+          </div>
+        </section>
+      </aside>
+
+      <aside class="hud hud-right">
+        <section class="panel">
+          <div class="panel-heading">
+            <span>Last Trades</span>
+            <strong id="trade-count">0</strong>
+          </div>
+          <ol class="trade-list" id="trade-list"></ol>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <span>Node Focus</span>
+            <strong id="node-count">0 online</strong>
+          </div>
+          <div id="node-focus" class="node-focus">Waiting for node telemetry.</div>
+        </section>
+      </aside>
+
+      <footer class="status-strip">
+        <div>
+          <span>Simulation Time</span>
+          <strong id="sim-time">--</strong>
+        </div>
+        <div>
+          <span>Ledger</span>
+          <strong id="ledger">verifying</strong>
+        </div>
+        <div>
+          <span>Stale Packets</span>
+          <strong id="stale">0</strong>
+        </div>
+        <a href="/swagger" target="_blank" rel="noreferrer">API</a>
+      </footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@8.0.7/dist/browser/signalr.min.js"></script>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

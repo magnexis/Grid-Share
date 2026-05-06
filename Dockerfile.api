@@ -1,0 +1,26 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+COPY GridShare.slnx ./
+COPY Directory.Build.props ./
+COPY GridShare.Domain/GridShare.Domain.csproj GridShare.Domain/
+COPY GridShare.Application/GridShare.Application.csproj GridShare.Application/
+COPY GridShare.Simulation/GridShare.Simulation.csproj GridShare.Simulation/
+COPY GridShare.Infrastructure/GridShare.Infrastructure.csproj GridShare.Infrastructure/
+COPY GridShare.Api/GridShare.Api.csproj GridShare.Api/
+
+RUN dotnet restore GridShare.Api/GridShare.Api.csproj
+
+COPY . .
+RUN dotnet publish GridShare.Api/GridShare.Api.csproj \
+    --configuration Release \
+    --no-restore \
+    --output /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "GridShare.Api.dll"]
