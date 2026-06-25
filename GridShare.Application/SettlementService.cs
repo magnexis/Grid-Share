@@ -47,10 +47,13 @@ public sealed class SettlementService : ISettlementService
             LifetimeEarnings = seller.LifetimeEarnings + amount
         };
 
+        var newBalance = buyer.WalletBalance - amount;
+        var additionalDebt = Math.Max(0, -newBalance) - Math.Max(0, -buyer.WalletBalance);
+
         _accounts[trade.ConsumerId] = buyer with
         {
-            WalletBalance = buyer.WalletBalance - amount,
-            UnpaidObligations = buyer.WalletBalance >= amount ? buyer.UnpaidObligations : buyer.UnpaidObligations + (amount - buyer.WalletBalance)
+            WalletBalance = newBalance,
+            UnpaidObligations = buyer.UnpaidObligations + additionalDebt
         };
     }
 }
