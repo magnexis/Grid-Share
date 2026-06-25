@@ -13,13 +13,13 @@ Start here:
 The old root scripts still work as shims:
 
 ```powershell
-./release-cli.ps1 -Version 0.1.0
-./release-api.ps1 -Version 0.1.0
+./release-cli.ps1 -Version 0.1.1
+./release-api.ps1 -Version 0.1.1
 ```
 
 Preferred commands:
 
 ```powershell
-./release/publish-cli.ps1 -Version 0.1.0
-./release/publish-api.ps1 -Version 0.1.0
+./release/publish-cli.ps1 -Version 0.1.1
+./release/publish-api.ps1 -Version 0.1.1
 ```

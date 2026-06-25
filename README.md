@@ -80,8 +80,8 @@ Defaults simulate 50 houses, 15 simulated minutes per tick, and a 24-hour day in
 Build local release packages:
 
 ```powershell
-./release/publish-cli.ps1 -Version 0.1.0
-./release/publish-api.ps1 -Version 0.1.0
+./release/publish-cli.ps1 -Version 0.1.1
+./release/publish-api.ps1 -Version 0.1.1
 ```
 
 See `release/README.md`, `release/cli.md`, and `release/api.md` for artifact details, Docker packaging, and smoke tests.

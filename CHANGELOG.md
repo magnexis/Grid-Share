@@ -6,6 +6,11 @@ This project follows a lightweight Keep a Changelog style and uses semantic vers
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed double-counted obligations in settlement calculations where trade obligations were added to both the buyer and seller accounts
+- Settlement service now correctly assigns obligations to a single party per trade
+
 ### Added
 
 - Hexagonal .NET solution with Domain, Application, Simulation, Infrastructure, CLI, API, and Tests projects.
